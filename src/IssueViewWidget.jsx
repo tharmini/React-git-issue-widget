@@ -125,7 +125,7 @@ class IssueViewWidget extends Component {
           return (
             <input
               style={{
-                width: "70%",
+                width: "100%",
                 backgroundColor: "#dce2e4",
                 color: "rgb(13, 90, 118)"
               }}
@@ -177,7 +177,7 @@ class IssueViewWidget extends Component {
           return (
             <input
               style={{
-                width: "70%",
+                width: "100%",
                 backgroundColor: "#dce2e4",
                 color: "rgb(13, 90, 118)"
               }}
@@ -195,25 +195,31 @@ class IssueViewWidget extends Component {
         filterMethod: (filter, row) => {
           const id = filter.pivotId || filter.id;
           var record = row[id];
+          console.log('record'+record);
           if (record instanceof Array) {
             var status = false;
 
             record.forEach(rec => {
-              if (rec.props.children.props !== undefined) {
-                if (
-                  String(rec.props.children.props.children)
-                    .toLowerCase()
-                    .includes(filter.value.toLowerCase())
-                ) {
-                  status = true;
-                }
+                console.log('String(rec.props.children )'+rec.props.children.props );
+                if((rec.props.children.props !== undefined))
+                {
+              if (
+                String(rec.props.children.props.children )
+                  .toLowerCase()
+                  .includes(filter.value.toLowerCase())
+              ) {
+                status = true;
               }
+            }
+
             });
+
+            console.log('status'+status);
             return status;
           }
 
-          return row[id]
-            ? String(row[id])
+          return row[id] ?
+          String(row[id])
                 .toLowerCase()
                 .includes(filter.value)
             : true;
@@ -450,10 +456,12 @@ class IssueViewWidget extends Component {
       >
         <div
           style={{
-            fontFamily: "sans-seri",
-            color: "rgb(176, 203, 224)",
+            fontFamily: "sans-serif",
+            color: "rgb(190, 247, 239)",
+            textAlign: 'left',
+            alignItems:"center",
             fontSize: "18px",
-            paddingRight: "270px"
+            paddingRight: "0px"
           }}
         >
           {" "}
@@ -491,14 +499,16 @@ class IssueViewWidget extends Component {
       >
         <div
           style={{
-            fontFamily: "sans-seri",
-            color: "rgb(176, 203, 224)",
+            fontFamily: "sans-serif",
+            textAlign: 'left',
+            color: "rgb(190, 247, 239)",
+            alignItems:"center",
             fontSize: "18px",
-            paddingRight: "270px"
+            paddingRight: "0px"
           }}
         >
           {" "}
-          Repo Name{" "}
+          Repository Name{" "}
         </div>
         <Select
           textFieldProps={{
@@ -531,14 +541,16 @@ class IssueViewWidget extends Component {
       >
         <div
           style={{
-            fontFamily: "sans-seri",
-            color: "rgb(176, 203, 224)",
+            fontFamily: "sans-serif",
+            color: "rgb(190, 247, 239)",
+            textAlign: 'left',
             fontSize: "18px",
-            paddingRight: "270px"
+            alignItems:"center",
+            paddingRight: "0px"
           }}
         >
           {" "}
-          Product Name{" "}
+          Label Name{" "}
         </div>
         <Select
           textFieldProps={{
@@ -565,13 +577,15 @@ class IssueViewWidget extends Component {
           style={{
             width: "100%",
             textAlign: "left",
-            backgroundColor: "rgb(13, 77, 126)",
+            margin: "0% 0% 0.15% 0%",
+            backgroundColor: "#060674",
             color: "rgb(161, 194, 212)",
             fontSize: "21px",
-            fontFamily: "sans-seri"
+            fontFamily: "sans-serif"
           }}
         >
-          {this.state.loading ? "Loading data......." : " "}
+
+          {this.state.loading ? <span>&nbsp;&nbsp;Loading data.......</span>  : " "}
         </div>
         <ReactTable
           previousText={this.state.myCustomPreviousText}
@@ -588,13 +602,13 @@ class IssueViewWidget extends Component {
 
   render() {
     let { data } = this.state;
-
     data.forEach(d => {
       d.labels = [];
       d.issueTitleWitheURL = [];
       let content = [];
+      //et issue_severity,issue_type,issue_resolution,issue_priority,issue_other='';
       content.push(
-        <span class="td3">
+        <div class="td3">
           <a
             href={d.url}
             rel="noopener noreferrer"
@@ -603,45 +617,47 @@ class IssueViewWidget extends Component {
           >
             {d.issueTitle}
           </a>
-        </span>
+        </div>
       );
 
       d.issueLabels.forEach(l => {
         if (l.startsWith("Severity")) {
           content.push(
-            <span class="td2">
+            <div className="status-txt" style={{ padding: "10px", color: "black" }}>
               <span id="issue-severity">{l}</span>
-            </span>
+            </div>
           );
         } else if (l.startsWith("Type")) {
           content.push(
-            <span class="td2">
+            <div className="status-txt" style={{ padding: "10px", color: "black" }}>
               <span id="issue-type">{l}</span>
-            </span>
+            </div>
           );
         } else if (l.startsWith("Resolution")) {
           content.push(
-            <span class="td2">
+            <div className="status-txt" style={{ padding: "10px", color: "black" }}>
               <span id="issue-resolution">{l}</span>
-            </span>
+            </div>
           );
         } else if (l.startsWith("Priority")) {
           content.push(
-            <span class="td2">
+            <div className="status-txt" style={{ padding: "10px", color: "black" }}>
               <span id="issue-priority">{l}</span>
-            </span>
+            </div>
           );
         } else {
           content.push(
-            <span class="td2">
+            <div className="status-txt" style={{ padding: "10px", color: "black" }}>
               <span id="issue-other">{l}</span>
-            </span>
+            </div>
           );
         }
       });
 
+
       d.issueTitleWitheURL = content;
     });
+
 
     return (
       <MuiThemeProvider>
@@ -651,13 +667,13 @@ class IssueViewWidget extends Component {
               flexWrap: "wrap",
               display: "flex",
               marginBottom: "0px",
-              backgroundColor: "rgb(8, 80, 122)"
+              backgroundColor: "#060674"
             }}
           >
             {this.renderProductSearchDropDown(components)}
             {this.renderRepoMultiSelect(components)}
             {this.renderLabelMultiSelect(suggestions, components)}
-            <div style={{ paddingTop: "35px", paddingRight: "10px" }}>
+            <div style={{ paddingTop: "35px", paddingRight: "10px",paddingLeft:"50px" }}>
               <Button
                 variant="contained"
                 color="rgb(150, 195, 212)"

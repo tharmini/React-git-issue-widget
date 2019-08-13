@@ -20,16 +20,19 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #8d0f06;
 }
 .headerstyle {
-  background:  rgb(229, 235, 241);
-  color:rgba(13, 16, 160, 0.87);
+  background:  rgb(255, 255, 255);
+  color:#060674;
   justify-content: center;
-  padding: 30px 10px;
-  border: 0px;
-  font-size: 22px;
-  font-family: sans-serif;
+  padding: 10px 10px;
+  border-top: 0px;
+  border-bottom: 2px #060674;
+  border-right: 0px;
+  border-left :0px;
+  font-family: sans-serif !important;
+;
   float: up;
   border-style: solid;
   cursor: pointer

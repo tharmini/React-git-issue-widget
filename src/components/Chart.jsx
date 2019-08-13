@@ -20,18 +20,16 @@ import React, { Component } from "../../node_modules/react";
 import { Bar } from "../../node_modules/react-chartjs-2";
 import axios from "axios";
 import moment from "moment";
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
+import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core/styles";
 
 const PageWrapper = withStyles({
-    root: {
-        padding: '30px',
-        background: 'transparent',
-        boxShadow: 'none'
-    }
+  root: {
+    padding: "30px",
+    background: "transparent",
+    boxShadow: "none"
+  }
 })(Paper);
-
-  
 
 //var randomColor = require("randomcolor"); // import the script
 class Chart extends Component {
@@ -43,8 +41,6 @@ class Chart extends Component {
     };
   }
 
-
-  
   static defaultProps = {
     displayTitle: true,
     displayLegend: true,
@@ -52,7 +48,6 @@ class Chart extends Component {
     chartName: "Git Issue"
   };
 
-  
   componentDidMount() {
     const getProductNamesURL =
       "http://" +
@@ -81,30 +76,31 @@ class Chart extends Component {
         });
 
         this.setState({
-            timeStamp: moment.unix(res.data[0]['TimeStamp'] / 1000).format('YYYY-MM-DD:hh:mm:ss'),
-            
+          timeStamp: moment
+            .unix(res.data[0]["TimeStamp"] / 1000)
+            .format("YYYY-MM-DD:hh:mm:ss"),
+
           chartData: {
             labels: ProductName,
             datasets: [
               {
                 label: "L1 IssueCount",
                 data: L1IssueCount,
-                backgroundColor: '#d4c70e'
+                backgroundColor: "#8d0f06"
               },
               {
                 label: "L2 IssueCount",
                 data: L2IssueCount,
-                backgroundColor: '#d45810'
+                backgroundColor: "#d45810"
               },
               {
                 label: "L3 IssueCount",
                 data: L3IssueCount,
-                backgroundColor:'#920d08'
+                backgroundColor: "#d4c70e"
               }
             ]
           }
         });
-       
       })
       .catch(error => {
         console.log(error);
@@ -113,103 +109,117 @@ class Chart extends Component {
 
   render() {
     return (
-        
-        <PageWrapper>      
-            
-      <div className="chart">
-          {this.state.timeStamp &&
-                <div style={{
-                    color: "rgb(5, 80, 129)",
-                    display: 'flex',
-                    paddingTop: "10px",
-                    paddingLeft: "10px",
-                    flexFlow: "row-reverse",
-                    fontWeight:"bold"
-                    
-                }}>
-                    <span> {this.state.timeStamp}</span>
-                     <span>Last Updated TimeStamp- </span>
-                </div>
+      <PageWrapper>
+        <div className="chart">
+          {this.state.timeStamp && (
+            <div
+              style={{
+                color: "#08089e",
+                display: "flex",
+                paddingTop: "0px",
+                paddingLeft: "10px",
+                flexFlow: "row-reverse",
+                fontSize: "18px",
+                fontWeight: "bold"
+              }}
+            >
+              <span> {this.state.timeStamp}</span>
+              <span>Last Updated TimeStamp- </span>
+            </div>
+          )}
+
+          <Bar
+            data={this.state.chartData}
+            options={{
+              hover: {
+                animationDuration: 0
+              },
+              animation: {
+                duration: 1,
+                onComplete: function() {
+                  var chartInstance = this.chart,
+                    ctx = chartInstance.ctx;
+                  ctx.textAlign = "center";
+                  ctx.textBaseline = "bottom";
+                  this.data.datasets.forEach(function(dataset, i) {
+                    var meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      var data = dataset.data[index];
+                      if (data !== 0) {
+                        ctx.fillText(data, bar._model.x, bar._model.y - 0);
+                      }
+                    });
+                  });
                 }
-                
-        <Bar
-          data={this.state.chartData}
-          options={
-              {
-                "hover": {
-                    "animationDuration": 0
-                  },
-                  "animation": {
-                    "duration": 1,
-                    "onComplete": function() {
-                      var chartInstance = this.chart,
-                        ctx = chartInstance.ctx;
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'bottom';
-                        this.data.datasets.forEach(function(dataset, i) {
-                        var meta = chartInstance.controller.getDatasetMeta(i);
-                        meta.data.forEach(function(bar, index) {
-                          var data = dataset.data[index];
-                          if(data!==0)
-                          {
-                          ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                          }
-                        });
-                      });
+              },
+              title: {
+                width: 320
+              },
+
+              scales: {
+                xAxes: [
+                  {
+                    ticks: {
+                      fontColor: "black",
+                      fontSize: 16,
+                      fontWeight: "bold",
+                      fontFamily: "sans-serif",
+                      beginAtZero: true
+                    },
+                    barPercentage: 1,
+                    barThickness: 43,
+                    maxBarThickness: 98,
+                    minBarLength: 0,
+                    gridLines: {
+                      display: true,
+                      drawBorder: true,
+                      offsetGridLines: true,
+                      color: " #d5dee2",
+                      drawTicks: true,
+                      drawOnChartArea: true,
+                      circular: true
                     }
-                  },
-            title: {
-              width: 320
-            },
-            scales: {
-              xAxes: [
-                {
-                  barPercentage: 1,
-                  barThickness: 43,
-                  maxBarThickness: 98,
-                  minBarLength: 0,
-                  gridLines: {
-                    display: true,
-                    drawBorder: true,
-                    offsetGridLines: true,
-                    color: " #d5dee2",
-                    drawTicks: true,
-                    drawOnChartArea: true,
-                    circular: true
                   }
-                }
-              ],
-              yAxes: [
-                {
-                  barPercentage: 0.5,
-                  barThickness: 43,
-                  maxBarThickness: 48,
-                  minBarLength: 0,
-                  gridLines: {
-                    display: true,
-                    drawBorder: true,
-                    offsetGridLines: true,
-                    color: " #d5dee2",
-                    drawTicks: true,
-                    drawOnChartArea: true,
-                    circular: true
+                ],
+                yAxes: [
+                  {
+                    ticks: {
+                      fontColor: "black",
+                      fontSize: 17,
+                      beginAtZero: true
+                    },
+                    barPercentage: 0.5,
+                    barThickness: 43,
+                    maxBarThickness: 48,
+                    minBarLength: 0,
+                    fontColor: "red",
+                    fontSize: 18,
+                    gridLines: {
+                      display: true,
+                      drawBorder: true,
+                      offsetGridLines: true,
+                      color: " #d5dee2",
+                      drawTicks: true,
+                      drawOnChartArea: true,
+                      circular: true
+                    }
                   }
-                }
-              ]
-            },
-            legend: {
-              display: this.props.displayLegend,
-              position: this.props.legendPosition
-            }
-          }}
-        />
-      </div>
+                ]
+              },
+              legend: {
+                labels: {
+                  fontColor: "#3f51b5",
+                  fontSize: 16
+                },
+                display: this.props.displayLegend,
+                position: this.props.legendPosition
+              }
+            }}
+          />
+        </div>
       </PageWrapper>
     );
   }
 }
-
-
-
 
 export default Chart;

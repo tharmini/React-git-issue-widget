@@ -26,7 +26,7 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  border: 1px solid rgb(75, 73, 73);
+  border: 2px solid rgba(13, 16, 160, 0.87);
 }
 
 .ReactTable * {
@@ -75,7 +75,8 @@
 }
 
 .ReactTable .rt-thead.-filters {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 0px solid rgba(0, 0, 0, 0.05);
+
 }
 
 .ReactTable .rt-thead.-filters input,
@@ -148,7 +149,9 @@
 .ReactTable .rt-thead .rt-resizable-header-content {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 22px;
 }
+
 
 .ReactTable .rt-thead .rt-header-pivot {
   border-right-color: #f7f7f7;
@@ -165,6 +168,26 @@
   position: absolute;
   pointer-events: none;
 }
+@media only screen and (max-width: 1024px) {
+  .MuiFormControl-root.form {
+    min-width: unset;
+    width: 100%;
+    margin: unset;
+    display: -webkit-inline-box !important;
+
+}
+}
+
+@media only screen and (max-width: 768px) {
+  .MuiFormControl-root.form {
+    min-width: unset;
+    width: 100% !important;
+    margin: unset;
+    display: unset !important;
+
+}
+}
+
 
 .ReactTable .rt-thead .rt-header-pivot:after {
   border-color: rgba(255, 255, 255, 0);
@@ -322,18 +345,24 @@
 
 .rt-td {
   white-space: unset;
-  padding: 25px 12px;
+  padding: 5px 10px;
   size: 100%;
-
   flex: 100 0 auto;
-  font-family: "sans-serif";
-  font-weight: 700;
+  font-family: sans-serif !important;
+  font-weight: 500;
   font-size: 18px;
   width: 10px;
   color: rgb(5, 80, 129);
 }
+.rt-td .td3 {
+	padding: "10px";
+	color: "black";
+	padding: 15px;
+	size: 100%;
+	flex-direction: column;
+  }
 
-.td2 {
+.rt-td .td2 {
   padding: "10px";
   color: "black";
   padding: 15px;
@@ -546,7 +575,7 @@
 
 .darkTheme.ReactTable .rt-thead.-header {
   color: #fff;
-  background: rgb(5, 36, 77);
+  background: #060674;
 }
 
 .darkTheme.ReactTable .rt-tbody .rt-tr-group {
@@ -633,7 +662,7 @@
 }
 
 .material-icons {
-  font-family: "sans-serif";
+  font-family: sans-serif !important;
   font-weight: normal;
   font-style: normal;
   font-size: 8px;
@@ -712,5 +741,47 @@ a {
 }
 
 a:hover {
-  color: #195270;
+  color: #060674;
+}
+
+.ReactTable .rt-th, .ReactTable .rt-td {
+
+  display: unset !important;
+
+}
+
+.td3 {
+  width: unset !important;
+}
+.sub-text {
+
+  display: flex;
+  width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center !important;
+  justify-content: center;
+}
+.td4 {
+  padding: 5px !important;
+}
+element.style {
+  flex-wrap: wrap;
+  display: flex;
+  width: 1611px;
+  margin-bottom: 0px;
+  margin: 0.15% 3% 0px;
+  background-color: #060674;
+}
+.status-txt {
+  display: inline-block;
+}
+.ReactTable .rt-th.rt-resizable-header.-cursor-pointer .columnheader{
+  flex: 100 0 auto;
+  width: 50%;
+}
+.rt-th {
+  flex: 100 0 auto;
+  width: 50%;
 }

@@ -26,22 +26,18 @@ import "./components/css/App.css";
 class App extends Component {
   render() {
     return (
-      <div className="App" style={{ backgroundColor: "rgb(229, 235, 241)" }}>
+      <div className="App" style={{ backgroundColor: "white" }}>
         <div className="container">
           <Header />
           <div
             style={{
-              border: "2px solid Gainsboro",
-              padding: "45px 35px 45px 10px"
+              backgroundColor: "white"
             }}
           >
             <Chart />
           </div>
 
-          <span>&nbsp; </span>
-          <div style={{ border: "2px solid Gainsboro" }}>
-            <IssueViewWidget />
-          </div>
+          <IssueViewWidget />
         </div>
       </div>
     );
